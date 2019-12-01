@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="h-full">
+  <head>
+    <meta charset=utf-8 />
+    <title>Pyxel</title>
+    <link rel="stylesheet" href="tailwind.css" />
+    <link rel="stylesheet" href="codemirror.css" />
+    <link rel="stylesheet" href="solarized.css" />
+    <link rel="stylesheet" href="editor.css" />
+    <style>.CodeMirror{height: 100%;}</style>
+  </head>
+  <body class="h-full">
+    <div class="flex h-full">
+      <div class="w-1/2 h-full">
+        <textarea class="h-full" id="code"></textarea>
+      </div>
+      <div class="w-1/2 h-full bg-black flex flex-col items-stretch">
+        <div class="flex-grow flex items-center justify-center" id="canvas_container">
+          <canvas id="canvas"></canvas>
+        </div>
+        <pre id="output" class="bg-gray-900 text-white p-2 overflow-y-auto  break-all" style="height: 20vh;"></pre>
+      </div>
+    </div>
+    <script src="codemirrorepl.js" type="text/javascript"></script>
+    <script src="python.js" type="text/javascript"></script>
+    <script src="editor.js"></script>
+    <script src="skulpt.min.js"></script>
+    <script src="skulpt-stdlib.js"></script>
+    <script src="pyxel.js"></script>
+  </body>
+</html>
