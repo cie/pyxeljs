@@ -160,6 +160,252 @@ const VERSION = '1.2.10',
   MUSIC_BANK_COUNT = 8,
   MUSIC_CHANNEL_COUNT = 4,
   RESOURCE_FILE_EXTENSION = '.pyxres',
+  KEY_SPACE = 0,
+  KEY_QUOTE = 1,
+  KEY_COMMA = 2,
+  KEY_MINUS = 3,
+  KEY_PERIOD = 4,
+  KEY_SLASH = 5,
+  KEY_0 = 6,
+  KEY_1 = 7,
+  KEY_2 = 8,
+  KEY_3 = 9,
+  KEY_4 = 10,
+  KEY_5 = 11,
+  KEY_6 = 12,
+  KEY_7 = 13,
+  KEY_8 = 14,
+  KEY_9 = 15,
+  KEY_SEMICOLON = 16,
+  KEY_EQUAL = 17,
+  KEY_A = 18,
+  KEY_B = 19,
+  KEY_C = 20,
+  KEY_D = 21,
+  KEY_E = 22,
+  KEY_F = 23,
+  KEY_G = 24,
+  KEY_H = 25,
+  KEY_I = 26,
+  KEY_J = 27,
+  KEY_K = 28,
+  KEY_L = 29,
+  KEY_M = 30,
+  KEY_N = 31,
+  KEY_O = 32,
+  KEY_P = 33,
+  KEY_Q = 34,
+  KEY_R = 35,
+  KEY_S = 36,
+  KEY_T = 37,
+  KEY_U = 38,
+  KEY_V = 39,
+  KEY_W = 40,
+  KEY_X = 41,
+  KEY_Y = 42,
+  KEY_Z = 43,
+  KEY_LEFT_BRACKET = 44,
+  KEY_BACKSLASH = 45,
+  KEY_RIGHT_BRACKET = 46,
+  KEY_BACKQUOTE = 47,
+  KEY_ESCAPE = 48,
+  KEY_ENTER = 49,
+  KEY_TAB = 50,
+  KEY_BACKSPACE = 51,
+  KEY_INSERT = 52,
+  KEY_DELETE = 53,
+  KEY_RIGHT = 54,
+  KEY_LEFT = 55,
+  KEY_DOWN = 56,
+  KEY_UP = 57,
+  KEY_PAGE_UP = 58,
+  KEY_PAGE_DOWN = 59,
+  KEY_HOME = 60,
+  KEY_END = 61,
+  KEY_CAPS_LOCK = 62,
+  KEY_SCROLL_LOCK = 63,
+  KEY_NUM_LOCK = 64,
+  KEY_PRINT_SCREEN = 65,
+  KEY_PAUSE = 66,
+  KEY_F1 = 67,
+  KEY_F2 = 68,
+  KEY_F3 = 69,
+  KEY_F4 = 70,
+  KEY_F5 = 71,
+  KEY_F6 = 72,
+  KEY_F7 = 73,
+  KEY_F8 = 74,
+  KEY_F9 = 75,
+  KEY_F10 = 76,
+  KEY_F11 = 77,
+  KEY_F12 = 78,
+  KEY_KP_0 = 79,
+  KEY_KP_1 = 80,
+  KEY_KP_2 = 81,
+  KEY_KP_3 = 82,
+  KEY_KP_4 = 83,
+  KEY_KP_5 = 84,
+  KEY_KP_6 = 85,
+  KEY_KP_7 = 86,
+  KEY_KP_8 = 87,
+  KEY_KP_9 = 88,
+  KEY_KP_DECIMAL = 89,
+  KEY_KP_DIVIDE = 90,
+  KEY_KP_MULTIPLY = 91,
+  KEY_KP_SUBTRACT = 92,
+  KEY_KP_ADD = 93,
+  KEY_KP_ENTER = 94,
+  KEY_KP_EQUAL = 95,
+  KEY_LEFT_SHIFT = 96,
+  KEY_LEFT_CONTROL = 97,
+  KEY_LEFT_ALT = 98,
+  KEY_LEFT_SUPER = 99,
+  KEY_RIGHT_SHIFT = 100,
+  KEY_RIGHT_CONTROL = 101,
+  KEY_RIGHT_ALT = 102,
+  KEY_RIGHT_SUPER = 103,
+  KEY_MENU = 104,
+  DOM_KEY_COUNT = 105,
+  KEY_SHIFT = DOM_KEY_COUNT,
+  KEY_CONTROL = 106,
+  KEY_ALT = 107,
+  KEY_SUPER = 108,
+  MOUSE_LEFT_BUTTON = 109,
+  MOUSE_MIDDLE_BUTTON = 110,
+  MOUSE_RIGHT_BUTTON = 111,
+  GAMEPAD_1_A = 112,
+  GAMEPAD_1_B = 113,
+  GAMEPAD_1_X = 114,
+  GAMEPAD_1_Y = 115,
+  GAMEPAD_1_LEFT_SHOULDER = 116,
+  GAMEPAD_1_RIGHT_SHOULDER = 117,
+  GAMEPAD_1_SELECT = 118,
+  GAMEPAD_1_START = 119,
+  GAMEPAD_1_UP = 120,
+  GAMEPAD_1_RIGHT = 121,
+  GAMEPAD_1_DOWN = 122,
+  GAMEPAD_1_LEFT = 123,
+  GAMEPAD_2_A = 124,
+  GAMEPAD_2_B = 125,
+  GAMEPAD_2_X = 126,
+  GAMEPAD_2_Y = 127,
+  GAMEPAD_2_LEFT_SHOULDER = 128,
+  GAMEPAD_2_RIGHT_SHOULDER = 129,
+  GAMEPAD_2_SELECT = 130,
+  GAMEPAD_2_START = 131,
+  GAMEPAD_2_UP = 132,
+  GAMEPAD_2_RIGHT = 133,
+  GAMEPAD_2_DOWN = 134,
+  GAMEPAD_2_LEFT = 135,
+  KEY_COUNT = 136,
+  DOM_KEY_TABLE = [
+    'Space',
+    'Quote',
+    'Comma',
+    'Minus',
+    'Period',
+    'Slash',
+    'Digit0',
+    'Digit1',
+    'Digit2',
+    'Digit3',
+    'Digit4',
+    'Digit5',
+    'Digit6',
+    'Digit7',
+    'Digit8',
+    'Digit9',
+    'Semicolon',
+    'Equal',
+    'KeyA',
+    'KeyB',
+    'KeyC',
+    'KeyD',
+    'KeyE',
+    'KeyF',
+    'KeyG',
+    'KeyH',
+    'KeyI',
+    'KeyJ',
+    'KeyK',
+    'KeyL',
+    'KeyM',
+    'KeyN',
+    'KeyO',
+    'KeyP',
+    'KeyQ',
+    'KeyR',
+    'KeyS',
+    'KeyT',
+    'KeyU',
+    'KeyV',
+    'KeyW',
+    'KeyX',
+    'KeyY',
+    'KeyZ',
+    'BracketLeft',
+    'Backslash',
+    'BracketRight',
+    'Backquote',
+    'Escape',
+    'Enter',
+    'Tab',
+    'Backspace',
+    'Insert',
+    'Delete',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowDown',
+    'ArrowUp',
+    'PageUp',
+    'PageDown',
+    'Home',
+    'End',
+    'CapsLock',
+    'ScrollLock',
+    'NumLock',
+    'PrintScreen',
+    'Pause',
+    'F1',
+    'F2',
+    'F3',
+    'F4',
+    'F5',
+    'F6',
+    'F7',
+    'F8',
+    'F9',
+    'F10',
+    'F11',
+    'F12',
+    'Numpad0',
+    'Numpad1',
+    'Numpad2',
+    'Numpad3',
+    'Numpad4',
+    'Numpad5',
+    'Numpad6',
+    'Numpad7',
+    'Numpad8',
+    'Numpad9',
+    'NumpadDecimal',
+    'NumpadDivide',
+    'NumpadMultiply',
+    'NumpadSubtract',
+    'NumpadAdd',
+    'NumpadEnter',
+    'NumpadEqual',
+    'ShiftLeft',
+    'ControlLeft',
+    'MetaLeft',
+    'Super left TODO',
+    'ShiftRight',
+    'ControlRight',
+    'AltRight',
+    'Super right TODO',
+    'ContextMenu'
+  ],
+  DEFAULT_QUIT_KEY = KEY_ESCAPE,
   DEFAULT_CAPTION = 'Pyxel',
   DEFAULT_SCALE = 0,
   DEFAULT_PALETTE = [
@@ -230,145 +476,144 @@ DEFAULT_FPS = ${DEFAULT_FPS}
 DEFAULT_BORDER_WIDTH = ${DEFAULT_BORDER_WIDTH}
 DEFAULT_BORDER_COLOR = ${DEFAULT_BORDER_COLOR}
 
-KEY_SPACE = 0
-KEY_QUOTE = 1
-KEY_COMMA = 2
-KEY_MINUS = 3
-KEY_PERIOD = 4
-KEY_SLASH = 5
-KEY_0 = "0"
-KEY_1 = "1"
-KEY_2 = "2"
-KEY_3 = "3"
-KEY_4 = "4"
-KEY_5 = "5"
-KEY_6 = "6"
-KEY_7 = "7"
-KEY_8 = "8"
-KEY_9 = "9"
-KEY_SEMICOLON = ";"
-KEY_EQUAL = "="
-#KEY_A = _get_constant_number("KEY_A")
-#KEY_B = _get_constant_number("KEY_B")
-#KEY_C = _get_constant_number("KEY_C")
-#KEY_D = _get_constant_number("KEY_D")
-#KEY_E = _get_constant_number("KEY_E")
-#KEY_F = _get_constant_number("KEY_F")
-#KEY_G = _get_constant_number("KEY_G")
-#KEY_H = _get_constant_number("KEY_H")
-#KEY_I = _get_constant_number("KEY_I")
-#KEY_J = _get_constant_number("KEY_J")
-#KEY_K = _get_constant_number("KEY_K")
-#KEY_L = _get_constant_number("KEY_L")
-#KEY_M = _get_constant_number("KEY_M")
-#KEY_N = _get_constant_number("KEY_N")
-#KEY_O = _get_constant_number("KEY_O")
-#KEY_P = _get_constant_number("KEY_P")
-KEY_Q = 29 # TODO
-#KEY_R = _get_constant_number("KEY_R")
-#KEY_S = _get_constant_number("KEY_S")
-#KEY_T = _get_constant_number("KEY_T")
-#KEY_U = _get_constant_number("KEY_U")
-#KEY_V = _get_constant_number("KEY_V")
-#KEY_W = _get_constant_number("KEY_W")
-#KEY_X = _get_constant_number("KEY_X")
-#KEY_Y = _get_constant_number("KEY_Y")
-#KEY_Z = _get_constant_number("KEY_Z")
-#KEY_LEFT_BRACKET = _get_constant_number("KEY_LEFT_BRACKET")
-#KEY_BACKSLASH = _get_constant_number("KEY_BACKSLASH")
-#KEY_RIGHT_BRACKET = _get_constant_number("KEY_RIGHT_BRACKET")
-#KEY_BACKQUOTE = _get_constant_number("KEY_BACKQUOTE")
-KEY_ESCAPE = "Escape"
-#KEY_ENTER = _get_constant_number("KEY_ENTER")
-#KEY_TAB = _get_constant_number("KEY_TAB")
-#KEY_BACKSPACE = _get_constant_number("KEY_BACKSPACE")
-#KEY_INSERT = _get_constant_number("KEY_INSERT")
-#KEY_DELETE = _get_constant_number("KEY_DELETE")
-#KEY_RIGHT = _get_constant_number("KEY_RIGHT")
-#KEY_LEFT = _get_constant_number("KEY_LEFT")
-#KEY_DOWN = _get_constant_number("KEY_DOWN")
-#KEY_UP = _get_constant_number("KEY_UP")
-#KEY_PAGE_UP = _get_constant_number("KEY_PAGE_UP")
-#KEY_PAGE_DOWN = _get_constant_number("KEY_PAGE_DOWN")
-#KEY_HOME = _get_constant_number("KEY_HOME")
-#KEY_END = _get_constant_number("KEY_END")
-#KEY_CAPS_LOCK = _get_constant_number("KEY_CAPS_LOCK")
-#KEY_SCROLL_LOCK = _get_constant_number("KEY_SCROLL_LOCK")
-#KEY_NUM_LOCK = _get_constant_number("KEY_NUM_LOCK")
-#KEY_PRINT_SCREEN = _get_constant_number("KEY_PRINT_SCREEN")
-#KEY_PAUSE = _get_constant_number("KEY_PAUSE")
-#KEY_F1 = _get_constant_number("KEY_F1")
-#KEY_F2 = _get_constant_number("KEY_F2")
-#KEY_F3 = _get_constant_number("KEY_F3")
-#KEY_F4 = _get_constant_number("KEY_F4")
-#KEY_F5 = _get_constant_number("KEY_F5")
-#KEY_F6 = _get_constant_number("KEY_F6")
-#KEY_F7 = _get_constant_number("KEY_F7")
-#KEY_F8 = _get_constant_number("KEY_F8")
-#KEY_F9 = _get_constant_number("KEY_F9")
-#KEY_F10 = _get_constant_number("KEY_F10")
-#KEY_F11 = _get_constant_number("KEY_F11")
-#KEY_F12 = _get_constant_number("KEY_F12")
-#KEY_KP_0 = _get_constant_number("KEY_KP_0")
-#KEY_KP_1 = _get_constant_number("KEY_KP_1")
-#KEY_KP_2 = _get_constant_number("KEY_KP_2")
-#KEY_KP_3 = _get_constant_number("KEY_KP_3")
-#KEY_KP_4 = _get_constant_number("KEY_KP_4")
-#KEY_KP_5 = _get_constant_number("KEY_KP_5")
-#KEY_KP_6 = _get_constant_number("KEY_KP_6")
-#KEY_KP_7 = _get_constant_number("KEY_KP_7")
-#KEY_KP_8 = _get_constant_number("KEY_KP_8")
-#KEY_KP_9 = _get_constant_number("KEY_KP_9")
-#KEY_KP_DECIMAL = _get_constant_number("KEY_KP_DECIMAL")
-#KEY_KP_DIVIDE = _get_constant_number("KEY_KP_DIVIDE")
-#KEY_KP_MULTIPLY = _get_constant_number("KEY_KP_MULTIPLY")
-#KEY_KP_SUBTRACT = _get_constant_number("KEY_KP_SUBTRACT")
-#KEY_KP_ADD = _get_constant_number("KEY_KP_ADD")
-#KEY_KP_ENTER = _get_constant_number("KEY_KP_ENTER")
-#KEY_KP_EQUAL = _get_constant_number("KEY_KP_EQUAL")
-#KEY_LEFT_SHIFT = _get_constant_number("KEY_LEFT_SHIFT")
-#KEY_LEFT_CONTROL = _get_constant_number("KEY_LEFT_CONTROL")
-#KEY_LEFT_ALT = _get_constant_number("KEY_LEFT_ALT")
-#KEY_LEFT_SUPER = _get_constant_number("KEY_LEFT_SUPER")
-#KEY_RIGHT_SHIFT = _get_constant_number("KEY_RIGHT_SHIFT")
-#KEY_RIGHT_CONTROL = _get_constant_number("KEY_RIGHT_CONTROL")
-#KEY_RIGHT_ALT = _get_constant_number("KEY_RIGHT_ALT")
-#KEY_RIGHT_SUPER = _get_constant_number("KEY_RIGHT_SUPER")
-#KEY_MENU = _get_constant_number("KEY_MENU")
-#KEY_SHIFT = _get_constant_number("KEY_SHIFT")
-#KEY_CONTROL = _get_constant_number("KEY_CONTROL")
-#KEY_ALT = _get_constant_number("KEY_ALT")
-#KEY_SUPER = _get_constant_number("KEY_SUPER")
+KEY_SPACE = ${KEY_SPACE}
+KEY_QUOTE = ${KEY_QUOTE}
+KEY_COMMA = ${KEY_COMMA}
+KEY_MINUS = ${KEY_MINUS}
+KEY_PERIOD = ${KEY_PERIOD}
+KEY_SLASH = ${KEY_SLASH}
+KEY_0 = ${KEY_0}
+KEY_1 = ${KEY_1}
+KEY_2 = ${KEY_2}
+KEY_3 = ${KEY_3}
+KEY_4 = ${KEY_4}
+KEY_5 = ${KEY_5}
+KEY_6 = ${KEY_6}
+KEY_7 = ${KEY_7}
+KEY_8 = ${KEY_8}
+KEY_9 = ${KEY_9}
+KEY_SEMICOLON = ${KEY_SEMICOLON}
+KEY_EQUAL = ${KEY_EQUAL}
+KEY_A = ${KEY_A}
+KEY_B = ${KEY_B}
+KEY_C = ${KEY_C}
+KEY_D = ${KEY_D}
+KEY_E = ${KEY_E}
+KEY_F = ${KEY_F}
+KEY_G = ${KEY_G}
+KEY_H = ${KEY_H}
+KEY_I = ${KEY_I}
+KEY_J = ${KEY_J}
+KEY_K = ${KEY_K}
+KEY_L = ${KEY_L}
+KEY_M = ${KEY_M}
+KEY_N = ${KEY_N}
+KEY_O = ${KEY_O}
+KEY_P = ${KEY_P}
+KEY_Q = ${KEY_Q}
+KEY_R = ${KEY_R}
+KEY_S = ${KEY_S}
+KEY_T = ${KEY_T}
+KEY_U = ${KEY_U}
+KEY_V = ${KEY_V}
+KEY_W = ${KEY_W}
+KEY_X = ${KEY_X}
+KEY_Y = ${KEY_Y}
+KEY_Z = ${KEY_Z}
+KEY_LEFT_BRACKET = ${KEY_LEFT_BRACKET}
+KEY_BACKSLASH = ${KEY_BACKSLASH}
+KEY_RIGHT_BRACKET = ${KEY_RIGHT_BRACKET}
+KEY_BACKQUOTE = ${KEY_BACKQUOTE}
+KEY_ESCAPE = ${KEY_ESCAPE}
+KEY_ENTER = ${KEY_ENTER}
+KEY_TAB = ${KEY_TAB}
+KEY_BACKSPACE = ${KEY_BACKSPACE}
+KEY_INSERT = ${KEY_INSERT}
+KEY_DELETE = ${KEY_DELETE}
+KEY_RIGHT = ${KEY_RIGHT}
+KEY_LEFT = ${KEY_LEFT}
+KEY_DOWN = ${KEY_DOWN}
+KEY_UP = ${KEY_UP}
+KEY_PAGE_UP = ${KEY_PAGE_UP}
+KEY_PAGE_DOWN = ${KEY_PAGE_DOWN}
+KEY_HOME = ${KEY_HOME}
+KEY_END = ${KEY_END}
+KEY_CAPS_LOCK = ${KEY_CAPS_LOCK}
+KEY_SCROLL_LOCK = ${KEY_SCROLL_LOCK}
+KEY_NUM_LOCK = ${KEY_NUM_LOCK}
+KEY_PRINT_SCREEN = ${KEY_PRINT_SCREEN}
+KEY_PAUSE = ${KEY_PAUSE}
+KEY_F1 = ${KEY_F1}
+KEY_F2 = ${KEY_F2}
+KEY_F3 = ${KEY_F3}
+KEY_F4 = ${KEY_F4}
+KEY_F5 = ${KEY_F5}
+KEY_F6 = ${KEY_F6}
+KEY_F7 = ${KEY_F7}
+KEY_F8 = ${KEY_F8}
+KEY_F9 = ${KEY_F9}
+KEY_F10 = ${KEY_F10}
+KEY_F11 = ${KEY_F11}
+KEY_F12 = ${KEY_F12}
+KEY_KP_0 = ${KEY_KP_0}
+KEY_KP_1 = ${KEY_KP_1}
+KEY_KP_2 = ${KEY_KP_2}
+KEY_KP_3 = ${KEY_KP_3}
+KEY_KP_4 = ${KEY_KP_4}
+KEY_KP_5 = ${KEY_KP_5}
+KEY_KP_6 = ${KEY_KP_6}
+KEY_KP_7 = ${KEY_KP_7}
+KEY_KP_8 = ${KEY_KP_8}
+KEY_KP_9 = ${KEY_KP_9}
+KEY_KP_DECIMAL = ${KEY_KP_DECIMAL}
+KEY_KP_DIVIDE = ${KEY_KP_DIVIDE}
+KEY_KP_MULTIPLY = ${KEY_KP_MULTIPLY}
+KEY_KP_SUBTRACT = ${KEY_KP_SUBTRACT}
+KEY_KP_ADD = ${KEY_KP_ADD}
+KEY_KP_ENTER = ${KEY_KP_ENTER}
+KEY_KP_EQUAL = ${KEY_KP_EQUAL}
+KEY_LEFT_SHIFT = ${KEY_LEFT_SHIFT}
+KEY_LEFT_CONTROL = ${KEY_LEFT_CONTROL}
+KEY_LEFT_ALT = ${KEY_LEFT_ALT}
+KEY_LEFT_SUPER = ${KEY_LEFT_SUPER}
+KEY_RIGHT_SHIFT = ${KEY_RIGHT_SHIFT}
+KEY_RIGHT_CONTROL = ${KEY_RIGHT_CONTROL}
+KEY_RIGHT_ALT = ${KEY_RIGHT_ALT}
+KEY_RIGHT_SUPER = ${KEY_RIGHT_SUPER}
+KEY_MENU = ${KEY_MENU}
+KEY_SHIFT = ${KEY_SHIFT}
+KEY_CONTROL = ${KEY_CONTROL}
+KEY_ALT = ${KEY_ALT}
+KEY_SUPER = ${KEY_SUPER}
+MOUSE_LEFT_BUTTON = ${MOUSE_LEFT_BUTTON}
+MOUSE_MIDDLE_BUTTON = ${MOUSE_MIDDLE_BUTTON}
+MOUSE_RIGHT_BUTTON = ${MOUSE_RIGHT_BUTTON}
+GAMEPAD_1_A = ${GAMEPAD_1_A}
+GAMEPAD_1_B = ${GAMEPAD_1_B}
+GAMEPAD_1_X = ${GAMEPAD_1_X}
+GAMEPAD_1_Y = ${GAMEPAD_1_Y}
+GAMEPAD_1_LEFT_SHOULDER = ${GAMEPAD_1_LEFT_SHOULDER}
+GAMEPAD_1_RIGHT_SHOULDER = ${GAMEPAD_1_RIGHT_SHOULDER}
+GAMEPAD_1_SELECT = ${GAMEPAD_1_SELECT}
+GAMEPAD_1_START = ${GAMEPAD_1_START}
+GAMEPAD_1_UP = ${GAMEPAD_1_UP}
+GAMEPAD_1_RIGHT = ${GAMEPAD_1_RIGHT}
+GAMEPAD_1_DOWN = ${GAMEPAD_1_DOWN}
+GAMEPAD_1_LEFT = ${GAMEPAD_1_LEFT}
+GAMEPAD_2_A = ${GAMEPAD_2_A}
+GAMEPAD_2_B = ${GAMEPAD_2_B}
+GAMEPAD_2_X = ${GAMEPAD_2_X}
+GAMEPAD_2_Y = ${GAMEPAD_2_Y}
+GAMEPAD_2_LEFT_SHOULDER = ${GAMEPAD_2_LEFT_SHOULDER}
+GAMEPAD_2_RIGHT_SHOULDER = ${GAMEPAD_2_RIGHT_SHOULDER}
+GAMEPAD_2_SELECT = ${GAMEPAD_2_SELECT}
+GAMEPAD_2_START = ${GAMEPAD_2_START}
+GAMEPAD_2_UP = ${GAMEPAD_2_UP}
+GAMEPAD_2_RIGHT = ${GAMEPAD_2_RIGHT}
+GAMEPAD_2_DOWN = ${GAMEPAD_2_DOWN}
+GAMEPAD_2_LEFT = ${GAMEPAD_2_LEFT}
+
 DEFAULT_QUIT_KEY = KEY_ESCAPE
-
-#MOUSE_LEFT_BUTTON = _get_constant_number("MOUSE_LEFT_BUTTON")
-#MOUSE_MIDDLE_BUTTON = _get_constant_number("MOUSE_MIDDLE_BUTTON")
-#MOUSE_RIGHT_BUTTON = _get_constant_number("MOUSE_RIGHT_BUTTON")
-#GAMEPAD_1_A = _get_constant_number("GAMEPAD_1_A")
-#GAMEPAD_1_B = _get_constant_number("GAMEPAD_1_B")
-#GAMEPAD_1_X = _get_constant_number("GAMEPAD_1_X")
-#GAMEPAD_1_Y = _get_constant_number("GAMEPAD_1_Y")
-#GAMEPAD_1_LEFT_SHOULDER = _get_constant_number("GAMEPAD_1_LEFT_SHOULDER")
-#GAMEPAD_1_RIGHT_SHOULDER = _get_constant_number("GAMEPAD_1_RIGHT_SHOULDER")
-#GAMEPAD_1_SELECT = _get_constant_number("GAMEPAD_1_SELECT")
-#GAMEPAD_1_START = _get_constant_number("GAMEPAD_1_START")
-#GAMEPAD_1_UP = _get_constant_number("GAMEPAD_1_UP")
-#GAMEPAD_1_RIGHT = _get_constant_number("GAMEPAD_1_RIGHT")
-#GAMEPAD_1_DOWN = _get_constant_number("GAMEPAD_1_DOWN")
-#GAMEPAD_1_LEFT = _get_constant_number("GAMEPAD_1_LEFT")
-#GAMEPAD_2_A = _get_constant_number("GAMEPAD_2_A")
-#GAMEPAD_2_B = _get_constant_number("GAMEPAD_2_B")
-#GAMEPAD_2_X = _get_constant_number("GAMEPAD_2_X")
-#GAMEPAD_2_Y = _get_constant_number("GAMEPAD_2_Y")
-#GAMEPAD_2_LEFT_SHOULDER = _get_constant_number("GAMEPAD_2_LEFT_SHOULDER")
-#GAMEPAD_2_RIGHT_SHOULDER = _get_constant_number("GAMEPAD_2_RIGHT_SHOULDER")
-#GAMEPAD_2_SELECT = _get_constant_number("GAMEPAD_2_SELECT")
-#GAMEPAD_2_START = _get_constant_number("GAMEPAD_2_START")
-#GAMEPAD_2_UP = _get_constant_number("GAMEPAD_2_UP")
-#GAMEPAD_2_RIGHT = _get_constant_number("GAMEPAD_2_RIGHT")
-#GAMEPAD_2_DOWN = _get_constant_number("GAMEPAD_2_DOWN")
-#GAMEPAD_2_LEFT = _get_constant_number("GAMEPAD_2_LEFT")
-
 #"
 #
 # Image class
@@ -1574,7 +1819,6 @@ class Graphics {
       let font = FONT_DATA[i]
 
       for (let j = 0; j < FONT_HEIGHT; j++) {
-        console.log(FONT_Y, FONT_HEIGHT, row, j)
         const dst_line = dst_data[FONT_Y + FONT_HEIGHT * row + j]
 
         for (let k = 0; k < FONT_WIDTH; k++) {
