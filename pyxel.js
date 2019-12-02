@@ -1267,9 +1267,12 @@ class Window {
     this.helperCanvas = document.createElement('canvas')
     this.helperCanvas.width = screen_width
     this.helperCanvas.height = screen_height
+    // DEBUG:
+    //this.canvas_container.appendChild(this.helperCanvas)
     this.ctx = this.canvas.getContext('2d')
     this.ctx.imageSmoothingEnabled = false
     this.helperCtx = this.helperCanvas.getContext('2d')
+
     // these are not needed - we do not create the window
     //const window_width =
     //this.screen_width * this.screen_scale + border_width * 2
@@ -1309,6 +1312,7 @@ class Window {
         data[index + j * 4 + 0] = c >> 16
         data[index + j * 4 + 1] = (c >> 8) & 0xff
         data[index + j * 4 + 2] = c & 0xff
+        data[index + j * 4 + 3] = 0xff
       }
     }
     this.helperCtx.putImageData(imageData, 0, 0)
@@ -1502,9 +1506,9 @@ class Image {
       const dst_line = dst_data[i]
 
       for (let j = 0; j < width; j++) {
-        const src_r = src_data[src_index + j * 4 + 3]
-        const src_g = src_data[src_index + j * 4 + 2]
-        const src_b = src_data[src_index + j * 4 + 1]
+        const src_r = src_data[src_index + j * 4 + 0]
+        const src_g = src_data[src_index + j * 4 + 1]
+        const src_b = src_data[src_index + j * 4 + 2]
 
         let nearest_color = 0
         let nearest_color_dist = 2147483647
