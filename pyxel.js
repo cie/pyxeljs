@@ -17,8 +17,14 @@ const VERSION = '1.2.10',
   COLOR_STEELBLUE = 13,
   COLOR_PINK = 14,
   COLOR_PEACH = 15,
+  MIN_FONT_CODE = 32,
+  MAX_FONT_CODE = 127,
+  FONT_X = 12,
+  FONT_Y = 0,
   FONT_WIDTH = 4,
   FONT_HEIGHT = 6,
+  FONT_ROW_COUNT = 48,
+  FONT_COLOR = 7,
   FONT_DATA = [
     0x000000,
     0x444040,
@@ -135,6 +141,20 @@ const VERSION = '1.2.10',
   TILEMAP_CHIP_COUNT =
     (TILEMAP_BANK_WIDTH / TILEMAP_CHIP_WIDTH) *
     (TILEMAP_BANK_HEIGHT / TILEMAP_CHIP_HEIGHT),
+  MOUSE_CURSOR_X = 2,
+  MOUSE_CURSOR_Y = 2,
+  MOUSE_CURSOR_WIDTH = 8,
+  MOUSE_CURSOR_HEIGHT = 8,
+  MOUSE_CURSOR_DATA = [
+    '00000011',
+    '07776011',
+    '07760111',
+    '07676011',
+    '06067601',
+    '00106760',
+    '11110601',
+    '11111011'
+  ],
   USER_SOUND_BANK_COUNT = 64,
   SOUND_BANK_FOR_SYSTEM = USER_SOUND_BANK_COUNT,
   MUSIC_BANK_COUNT = 8,
@@ -1248,14 +1268,16 @@ class Window {
     if (!this.canvas_container) throw 'Could not find canvas_container element'
 
     if (this.screen_scale <= 0) {
-      this.screen_scale = Math.max(
-        Math.min(
-          (canvas_container.offsetWidth - border_width * 2.0) /
-            this.screen_width,
-          (canvas_container.offsetHeight - border_width * 2.0) /
-            this.screen_height
-        ) * MAX_SCREEN_RATIO,
-        1.0
+      this.screen_scale = Math.floor(
+        Math.max(
+          Math.min(
+            (canvas_container.offsetWidth - border_width * 2.0) /
+              this.screen_width,
+            (canvas_container.offsetHeight - border_width * 2.0) /
+              this.screen_height
+          ) * MAX_SCREEN_RATIO,
+          1.0
+        )
       )
     }
 
@@ -1336,8 +1358,12 @@ class Graphics {
     this.screen_height = height
     this.screen_data = this.image_bank[IMAGE_BANK_FOR_SCREEN].Data()
 
+    this.SetupMouseCursor()
+    this.SetupFont()
+
     this.ResetClipArea()
     this.ResetPalette()
+    this.ClearScreen(0)
   }
   GetImageBank (image_index, system) {
     if (image_index < 0 || image_index >= TOTAL_IMAGE_BANK_COUNT) {
@@ -1359,6 +1385,9 @@ class Graphics {
   }
   ResetClipArea () {
     this.clip_area = new Rectangle(0, 0, this.screen_width, this.screen_height)
+  }
+  GetDrawColor (color) {
+    return this.palette_table[color]
   }
 
   ClearScreen (col) {}
@@ -1423,6 +1452,139 @@ class Graphics {
       }
     }
   }
+  DrawTilemap (x, y, tilemap_index, u, v, width, height, color_key) {
+    const tilemap = GetTilemapBank(tilemap_index)
+    const image_index = tilemap.ImageIndex()
+
+    const left = this.clip_area.Left() / TILEMAP_CHIP_WIDTH
+    const top = this.clip_area.Top() / TILEMAP_CHIP_WIDTH
+    const right =
+      (this.clip_area.Right() + TILEMAP_CHIP_WIDTH - 1) / TILEMAP_CHIP_WIDTH
+    const bottom =
+      (this.clip_area.Bottom() + TILEMAP_CHIP_HEIGHT - 1) / TILEMAP_CHIP_HEIGHT
+    const dst_rect = Rectangle(left, top, right - left + 1, bottom - top + 1)
+
+    const copy_area = dst_rect.GetCopyArea(
+      x / TILEMAP_CHIP_WIDTH,
+      y / TILEMAP_CHIP_HEIGHT,
+      tilemap.Rectangle(),
+      u,
+      v,
+      width,
+      height
+    )
+
+    if (copy_area.IsEmpty()) {
+      return
+    }
+
+    const src_data = tilemap.Data()
+
+    copy_area.x = copy_area.x * TILEMAP_CHIP_WIDTH + (x % TILEMAP_CHIP_WIDTH)
+    copy_area.y = copy_area.y * TILEMAP_CHIP_HEIGHT + (y % TILEMAP_CHIP_HEIGHT)
+
+    for (let i = 0; i < copy_area.height; i++) {
+      const src_line = src_data[copy_area.v + i]
+      const dst_y = copy_area.y + TILEMAP_CHIP_HEIGHT * i
+
+      for (let j = 0; j < copy_area.width; j++) {
+        const chip = src_line[copy_area.u + j]
+        const cu =
+          (chip % (IMAGE_BANK_WIDTH / TILEMAP_CHIP_WIDTH)) * TILEMAP_CHIP_WIDTH
+        const cv =
+          (chip / (IMAGE_BANK_HEIGHT / TILEMAP_CHIP_HEIGHT)) *
+          TILEMAP_CHIP_HEIGHT
+
+        DrawImage(
+          copy_area.x + TILEMAP_CHIP_WIDTH * j,
+          dst_y,
+          image_index,
+          cu,
+          cv,
+          TILEMAP_CHIP_WIDTH,
+          TILEMAP_CHIP_HEIGHT,
+          color_key
+        )
+      }
+    }
+  }
+
+  DrawText (x, y, text, color) {
+    const draw_color = this.GetDrawColor(color)
+    const cur_color = this.palette_table[FONT_COLOR]
+    this.palette_table[FONT_COLOR] = draw_color
+
+    const left = x
+
+    for (let i = 0; i < text.length; ++i) {
+      const ch = text.codePointAt(i)
+      if (ch == 10) {
+        // new line
+        x = left
+        y += FONT_HEIGHT
+        continue
+      }
+
+      if (ch == 32) {
+        // space
+        x += FONT_WIDTH
+        continue
+      }
+
+      if (ch < MIN_FONT_CODE || ch > MAX_FONT_CODE) {
+        continue
+      }
+
+      const code = ch - MIN_FONT_CODE
+      const u = (code % FONT_ROW_COUNT) * FONT_WIDTH
+      const v = Math.floor(code / FONT_ROW_COUNT) * FONT_HEIGHT
+
+      this.DrawImage(
+        x,
+        y,
+        IMAGE_BANK_FOR_SYSTEM,
+        FONT_X + u,
+        FONT_Y + v,
+        FONT_WIDTH,
+        FONT_HEIGHT,
+        0
+      )
+
+      x += FONT_WIDTH
+    }
+
+    this.palette_table[FONT_COLOR] = cur_color
+  }
+
+  SetupMouseCursor () {
+    this.image_bank[IMAGE_BANK_FOR_SYSTEM].SetData(
+      MOUSE_CURSOR_X,
+      MOUSE_CURSOR_Y,
+      MOUSE_CURSOR_DATA
+    )
+  }
+
+  SetupFont () {
+    const FONT_COUNT = FONT_DATA.length
+    const dst_data = this.image_bank[IMAGE_BANK_FOR_SYSTEM].Data()
+
+    for (let i = 0; i < FONT_COUNT; i++) {
+      const row = Math.floor(i / FONT_ROW_COUNT)
+      const col = i % FONT_ROW_COUNT
+      let font = FONT_DATA[i]
+
+      for (let j = 0; j < FONT_HEIGHT; j++) {
+        console.log(FONT_Y, FONT_HEIGHT, row, j)
+        const dst_line = dst_data[FONT_Y + FONT_HEIGHT * row + j]
+
+        for (let k = 0; k < FONT_WIDTH; k++) {
+          dst_line[FONT_X + FONT_WIDTH * col + k] =
+            font & 0x800000 ? FONT_COLOR : 0
+          font <<= 1
+        }
+      }
+    }
+  }
 }
 
 class Input {
@@ -1473,6 +1635,35 @@ class Image {
     }
 
     this.data[y][x] = value
+  }
+
+  SetData (x, y, image_string) {
+    const width = image_string[0].length
+    const height = image_string.length
+
+    if (width < 1 || height < 1) {
+      PYXEL_ERROR('invalid value size')
+    }
+
+    const image = new Image(width, height)
+    const dst_data = image.data
+
+    for (let i = 0; i < height; i++) {
+      const str = image_string[i]
+      const dst_line = dst_data[i]
+
+      for (let j = 0; j < width; j++) {
+        const value = Number.parseInt(str.substr(j, 1), 16)
+
+        if (value < 0 || value >= COLOR_COUNT) {
+          PYXEL_ERROR('invalid value')
+        }
+
+        dst_line[j] = value
+      }
+    }
+
+    this.CopyImage(x, y, image, 0, 0, width, height)
   }
 
   async LoadImage (x, y, filename) {
