@@ -11,14 +11,32 @@
   </head>
   <body class="h-full">
     <div class="flex h-full">
-      <div class="w-1/2 h-full">
-        <textarea class="h-full" id="code"></textarea>
+      <div class="w-1/2 flex flex-col">
+        <textarea class="h-full flex-grow" id="code"></textarea>
+        <div class="h-6 flex items-stretch font-mono text-center">
+          <div style="background: #000000" class="flex-grow text-white">0</div>
+          <div style="background: #1d2b53" class="flex-grow text-white">1</div>
+          <div style="background: #7e2553" class="flex-grow">2</div>
+          <div style="background: #008751" class="flex-grow">3</div>
+          <div style="background: #ab5236" class="flex-grow">4</div>
+          <div style="background: #5f574f" class="flex-grow">5</div>
+          <div style="background: #c2c3c7" class="flex-grow">6</div>
+          <div style="background: #fff1e8" class="flex-grow">7</div>
+          <div style="background: #ff004d" class="flex-grow">8</div>
+          <div style="background: #ffa300" class="flex-grow">9</div>
+          <div style="background: #ffec27" class="flex-grow">10</div>
+          <div style="background: #00e436" class="flex-grow">11</div>
+          <div style="background: #29adff" class="flex-grow">12</div>
+          <div style="background: #83769c" class="flex-grow">13</div>
+          <div style="background: #ff77a8" class="flex-grow">14</div>
+          <div style="background: #ffccaa" class="flex-grow">15</div>
+        </div>
       </div>
       <div class="w-1/2 h-full bg-black flex flex-col items-stretch">
         <div class="flex-grow flex items-center justify-center" id="canvas_container">
           <canvas id="canvas"></canvas>
         </div>
-        <pre id="output" class="bg-gray-900 text-white p-2 overflow-y-auto  break-all" style="height: 20vh;"></pre>
+        <pre id="output" class="bg-gray-900 text-white p-2 overflow-y-auto  break-all" style="height: 8vh;"></pre>
       </div>
     </div>
     <script src="vendor/codemirror/codemirrorepl.js" type="text/javascript"></script>

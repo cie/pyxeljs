@@ -447,9 +447,8 @@ var $builtinmodule = ${function (name) {
     data_length
   ) {
     const tilemap_string = new TilemapString()
-    data_length = Sk.ffi.remapToJs(data_length)
     data = Sk.ffi.remapToJs(data)
-    for (let i = 0; i < data_length; i++) {
+    for (let i = 0; i < data.length; i++) {
       tilemap_string.push_back(data[i])
     }
 

@@ -138,7 +138,7 @@ export default class Graphics {
       let alpha = (end_y - start_y) / (end_x - start_x)
 
       for (let i = 0; i < length; i++) {
-        this.SetPixel(start_x + i, start_y + alpha * i + 0.5, draw_color)
+        this.SetPixel(start_x + i,  Math.round(start_y + alpha * i + 0.5), draw_color)
       }
     } else {
       let start_x, start_y
@@ -160,7 +160,7 @@ export default class Graphics {
       let alpha = (end_x - start_x) / (end_y - start_y)
 
       for (let i = 0; i < length; i++) {
-        this.SetPixel(start_x + alpha * i + 0.5, start_y + i, draw_color)
+        this.SetPixel(start_x + Math.round(alpha * i + 0.5), start_y + i, draw_color)
       }
     }
   }
@@ -214,7 +214,7 @@ export default class Graphics {
   }
 
   DrawCircle (x, y, radius, color) {
-    draw_color = this.GetDrawColor(color)
+    const draw_color = this.GetDrawColor(color)
 
     if (radius == 0) {
       this.SetPixel(x, y, draw_color)
@@ -224,7 +224,7 @@ export default class Graphics {
     const sq_radius = radius * radius
 
     for (let dx = 0; dx <= radius; dx++) {
-      let dy = Math.sqrt(sq_radius - dx * dx) + 0.5
+      let dy = Math.round(Math.sqrt(sq_radius - dx * dx))
 
       if (dx > dy) {
         continue
@@ -250,7 +250,7 @@ export default class Graphics {
     const sq_radius = radius * radius
 
     for (let dx = 0; dx <= radius; dx++) {
-      const dy = Math.sqrt(sq_radius - dx * dx) + 0.5
+      const dy = Math.round(Math.sqrt(sq_radius - dx * dx))
 
       if (dx > dy) {
         continue
@@ -400,7 +400,7 @@ export default class Graphics {
     }
   }
   DrawTilemap (x, y, tilemap_index, u, v, width, height, color_key) {
-    const tilemap = GetTilemapBank(tilemap_index)
+    const tilemap = this.GetTilemapBank(tilemap_index)
     const image_index = tilemap.ImageIndex()
 
     const left = this.clip_area.Left() / TILEMAP_CHIP_WIDTH
@@ -530,6 +530,13 @@ export default class Graphics {
         }
       }
     }
+  }
+
+  GetTilemapBank(tilemap_index) {
+    if (tilemap_index < 0 || tilemap_index >= TILEMAP_BANK_COUNT) {
+      PYXEL_ERROR("invalid tilemap index");
+    }
+    return this.tilemap_bank[tilemap_index];
   }
 
   GetDrawColor (color) {

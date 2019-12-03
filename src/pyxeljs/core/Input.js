@@ -14,6 +14,10 @@ export default class Input {
       this.key_state[i] = 0
     }
 
+    this._mouse_x = 0
+    this._mouse_y = 0
+    this.frame_count = 0
+
     const screen_scale = window.ScreenScale()
     window.canvas_container.addEventListener('mousemove', event => {
       const canvas = window.canvas.getBoundingClientRect()
@@ -23,20 +27,20 @@ export default class Input {
     })
     window.canvas_container.addEventListener('keydown', event => {
       const i = DOM_KEY_TABLE.indexOf(event.code)
-      if (~i) UpdateKeyState(i, true)
+      if (~i) this.UpdateKeyState(i, true)
     })
     window.canvas_container.addEventListener('keyup', event => {
       const i = DOM_KEY_TABLE.indexOf(event.code)
-      if (~i) UpdateKeyState(i, true)
+      if (~i) this.UpdateKeyState(i, true)
     })
     window.canvas_container.addEventListener('mousedown', event => {
       if (event.button >= 0 && event.button <= 2) {
-        UpdateKeyState(MOUSE_LEFT_BUTTON + event.button, true)
+        this.UpdateKeyState(MOUSE_LEFT_BUTTON + event.button, true)
       }
     })
     window.canvas_container.addEventListener('mouseup', event => {
       if (event.button >= 0 && event.button <= 2) {
-        UpdateKeyState(MOUSE_LEFT_BUTTON + event.button, false)
+        this.UpdateKeyState(MOUSE_LEFT_BUTTON + event.button, false)
       }
     })
   }
@@ -44,8 +48,8 @@ export default class Input {
   Update (window, frame_count) {
     this.frame_count = frame_count + 1 // change frame_count to start from 1
 
-    Sk.importModule('pyxel').$d['mouse_x'] = Sk.ffi.remapToPy(this._mouse_x)
-    Sk.importModule('pyxel').$d['mouse_y'] = Sk.ffi.remapToPy(this._mouse_y)
+    Sk.importModule('pyxel').$d['mouse_x'] = Sk.ffi.remapToPy(Math.floor(this._mouse_x))
+    Sk.importModule('pyxel').$d['mouse_y'] = Sk.ffi.remapToPy(Math.floor(this._mouse_y))
 
     if (this.is_mouse_visible) {
       window.canvas_container.style.cursor = ''
@@ -96,5 +100,17 @@ export default class Input {
 
   SetMouseVisible (is_visible) {
     this.is_mouse_visible = is_visible
+  }
+
+  UpdateKeyState(key, state) {
+    if (state) {
+      if (this.key_state[key] <= 0) {
+        this.key_state[key] = this.frame_count + 1; // add 1 because of how the JS event loop works
+      }
+    } else {
+      if (this.key_state[key] > 0) {
+        this.key_state[key] = -this.frame_count + 1; // add 1 because of how the JS event loop works
+      }
+    }
   }
 }

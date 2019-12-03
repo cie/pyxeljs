@@ -116,7 +116,7 @@ export default class System {
   }
 
   async UpdateFrame (update) {
-    this.input.Update(this.window)
+    this.input.Update(this.window, this.frame_count)
     if (update) await update()
   }
 

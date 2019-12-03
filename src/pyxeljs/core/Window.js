@@ -28,7 +28,7 @@ export default class Window {
               this.screen_width,
             (canvas_container.offsetHeight - border_width * 2.0) /
               this.screen_height
-          ) * MAX_SCREEN_RATIO,
+          )  ,
           1.0
         )
       )

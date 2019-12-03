@@ -35,6 +35,7 @@ function outf (text, error = false) {
 }
 
 function runit () {
+  document.getElementById('output').innerHTML = ''
   if (Sk.interrupters) {
     Sk.interrupters.forEach(i => i())
     Sk.interrupters.splice(0)
@@ -74,7 +75,6 @@ function runit () {
 
 function outputError (e) {
   if (e instanceof Sk.builtin.SystemExit) {
-    outf('Exited.\n')
     return
   }
   console.log(e)

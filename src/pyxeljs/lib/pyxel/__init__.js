@@ -369,7 +369,7 @@ DEFAULT_QUIT_KEY = KEY_ESCAPE
 class Image:
     def __init__(self, obj):
         self._obj = obj
-        self._data = core.image_data_getter(self._obj)
+        #self._data = core.image_data_getter(self._obj)
 
     @property
     def width(self):
@@ -381,6 +381,7 @@ class Image:
 
     @property
     def data(self):
+        raise "Image.data not implemented"
         return self._data
 
     def get(self, x, y):
@@ -414,7 +415,7 @@ class Image:
 class Tilemap:
     def __init__(self, obj):
         self._obj = obj
-        self._data = core.image_data_getter(self._obj)
+        #self._data = core.image_data_getter(self._obj)
 
     @property
     def width(self):
@@ -443,14 +444,7 @@ class Tilemap:
         if type(data) is int:
             core.tilemap_set1(self._obj, int(x), int(y), int(data))
         else:
-            data_count = len(data)
-            c_data = (c_char_p * data_count)()
-
-            for i in range(data_count):
-                c_str = create_string_buffer(data[i])
-                c_data[i] = cast(c_str, c_char_p)
-
-            core.tilemap_set(self._obj, int(x), int(y), c_data, data_count)
+            core.tilemap_set(self._obj, int(x), int(y), list(data))
 
     def copy(self, x, y, tm, u, v, w, h):
         core.tilemap_copy(
