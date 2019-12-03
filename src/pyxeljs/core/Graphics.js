@@ -63,6 +63,17 @@ export default class Graphics {
 
     return this.image_bank[Sk.ffi.remapToJs(image_index)]
   }
+  ResetClipArea () {
+    this.clip_area = new Rectangle(0, 0, this.screen_width, this.screen_height)
+  }
+  SetClipArea (x, y, width, height) {
+    this.clip_area = new Rectangle(
+      0,
+      0,
+      this.screen_width,
+      this.screen_height
+    ).Intersect(new Rectangle(x, y, width, height))
+  }
   ResetPalette () {
     this.palette_table = []
 
@@ -70,17 +81,266 @@ export default class Graphics {
       this.palette_table[i] = i
     }
   }
-  ResetClipArea () {
-    this.clip_area = new Rectangle(0, 0, this.screen_width, this.screen_height)
-  }
-  GetDrawColor (color) {
-    return this.palette_table[color]
+  SetPalette (src_color, dst_color) {
+    if (
+      src_color < 0 ||
+      src_color >= COLOR_COUNT ||
+      dst_color < 0 ||
+      dst_color >= COLOR_COUNT
+    ) {
+      PYXEL_ERROR('invalid color')
+    }
+
+    this.palette_table[src_color] = dst_color
   }
 
-  ClearScreen (col) {}
-  ScreenImage () {
-    return this.image_bank[IMAGE_BANK_FOR_SCREEN]
+  ClearScreen (color) {
+    const draw_color = this.GetDrawColor(color)
+
+    for (let i = 0; i < this.screen_height; i++) {
+      const dst_line = this.screen_data[i]
+
+      for (let j = 0; j < this.screen_width; j++) {
+        dst_line[j] = draw_color
+      }
+    }
   }
+
+  DrawPoint (x, y, color) {
+    this.SetPixel(x, y, this.GetDrawColor(color))
+  }
+
+  DrawLine (x1, y1, x2, y2, color) {
+    const draw_color = this.GetDrawColor(color)
+
+    if (x1 == x2 && y1 == y2) {
+      this.SetPixel(x1, y1, draw_color)
+      return
+    }
+
+    if (Math.abs(x1 - x2) > Math.abs(y1 - y2)) {
+      let start_x, start_y
+      let end_x, end_y
+
+      if (x1 < x2) {
+        start_x = x1
+        start_y = y1
+        end_x = x2
+        end_y = y2
+      } else {
+        start_x = x2
+        start_y = y2
+        end_x = x1
+        end_y = y1
+      }
+
+      let length = end_x - start_x + 1
+      let alpha = (end_y - start_y) / (end_x - start_x)
+
+      for (let i = 0; i < length; i++) {
+        this.SetPixel(start_x + i, start_y + alpha * i + 0.5, draw_color)
+      }
+    } else {
+      let start_x, start_y
+      let end_x, end_y
+
+      if (y1 < y2) {
+        start_x = x1
+        start_y = y1
+        end_x = x2
+        end_y = y2
+      } else {
+        start_x = x2
+        start_y = y2
+        end_x = x1
+        end_y = y1
+      }
+
+      let length = end_y - start_y + 1
+      let alpha = (end_x - start_x) / (end_y - start_y)
+
+      for (let i = 0; i < length; i++) {
+        this.SetPixel(start_x + alpha * i + 0.5, start_y + i, draw_color)
+      }
+    }
+  }
+
+  DrawRectangle (x, y, width, height, color) {
+    const draw_color = this.GetDrawColor(color)
+    const draw_rect = new Rectangle(x, y, width, height).Intersect(
+      this.clip_area
+    )
+
+    if (draw_rect.IsEmpty()) {
+      return
+    }
+
+    const left = draw_rect.Left()
+    const top = draw_rect.Top()
+    const right = draw_rect.Right()
+    const bottom = draw_rect.Bottom()
+
+    for (let i = top; i <= bottom; i++) {
+      const dst_line = this.screen_data[i]
+
+      for (let j = left; j <= right; j++) {
+        dst_line[j] = draw_color
+      }
+    }
+  }
+
+  DrawRectangleBorder (x, y, width, height, color) {
+    const draw_color = this.GetDrawColor(color)
+    const draw_rect = new Rectangle(x, y, width, height)
+
+    if (draw_rect.Intersect(this.clip_area).IsEmpty()) {
+      return
+    }
+
+    const left = draw_rect.Left()
+    const top = draw_rect.Top()
+    const right = draw_rect.Right()
+    const bottom = draw_rect.Bottom()
+
+    for (let i = left; i <= right; i++) {
+      this.SetPixel(i, top, draw_color)
+      this.SetPixel(i, bottom, draw_color)
+    }
+
+    for (let i = top; i <= bottom; i++) {
+      this.SetPixel(left, i, draw_color)
+      this.SetPixel(right, i, draw_color)
+    }
+  }
+
+  DrawCircle (x, y, radius, color) {
+    draw_color = this.GetDrawColor(color)
+
+    if (radius == 0) {
+      this.SetPixel(x, y, draw_color)
+      return
+    }
+
+    const sq_radius = radius * radius
+
+    for (let dx = 0; dx <= radius; dx++) {
+      let dy = Math.sqrt(sq_radius - dx * dx) + 0.5
+
+      if (dx > dy) {
+        continue
+      }
+
+      for (let i = -dy; i <= dy; i++) {
+        this.SetPixel(x - dx, y + i, draw_color)
+        this.SetPixel(x + dx, y + i, draw_color)
+        this.SetPixel(x + i, y - dx, draw_color)
+        this.SetPixel(x + i, y + dx, draw_color)
+      }
+    }
+  }
+
+  DrawCircleBorder (x, y, radius, color) {
+    const draw_color = this.GetDrawColor(color)
+
+    if (radius == 0) {
+      this.SetPixel(x, y, draw_color)
+      return
+    }
+
+    const sq_radius = radius * radius
+
+    for (let dx = 0; dx <= radius; dx++) {
+      const dy = Math.sqrt(sq_radius - dx * dx) + 0.5
+
+      if (dx > dy) {
+        continue
+      }
+
+      this.SetPixel(x - dx, y - dy, draw_color)
+      this.SetPixel(x + dx, y - dy, draw_color)
+      this.SetPixel(x - dx, y + dy, draw_color)
+      this.SetPixel(x + dx, y + dy, draw_color)
+
+      this.SetPixel(x - dy, y - dx, draw_color)
+      this.SetPixel(x + dy, y - dx, draw_color)
+      this.SetPixel(x - dy, y + dx, draw_color)
+      this.SetPixel(x + dy, y + dx, draw_color)
+    }
+  }
+
+  DrawTriangle (x1, y1, x2, y2, x3, y3, color) {
+    const draw_color = this.GetDrawColor(color)
+
+    let t
+    // rank as y3 > y2 > y1
+    if (y1 > y2) {
+      t = y2
+      y2 = y1
+      y1 = t
+      t = x2
+      x2 = x1
+      x1 = t
+    }
+    if (y1 > y3) {
+      t = y3
+      y3 = y1
+      y1 = t
+      t = x3
+      x3 = x1
+      x1 = t
+    }
+    if (y2 > y3) {
+      t = y3
+      y3 = y2
+      y2 = t
+      t = x3
+      x3 = x2
+      x2 = t
+    }
+    // slide bottom-up from y1 to y3
+    const alpha12 = y2 == y1 ? 0 : (x2 - x1) / (y2 - y1)
+    const alpha13 = y3 == y1 ? 0 : (x3 - x1) / (y3 - y1)
+    const alpha23 = y3 == y2 ? 0 : (x3 - x2) / (y3 - y2)
+    const x_intersection = x1 + alpha13 * (y2 - y1) + 0.5
+    const y_slider = y1
+    for (; y_slider <= y2; y_slider++) {
+      let x_slider, x_end
+
+      if (x_intersection < x2) {
+        x_slider = x_intersection + alpha13 * (y_slider - y2) + 0.5
+        x_end = x2 + alpha12 * (y_slider - y2) + 0.5
+      } else {
+        x_slider = x2 + alpha12 * (y_slider - y2) + 0.5
+        x_end = x_intersection + alpha13 * (y_slider - y2) + 0.5
+      }
+
+      for (; x_slider <= x_end; x_slider++) {
+        this.SetPixel(x_slider, y_slider, draw_color)
+      }
+    }
+    for (; y_slider <= y3; y_slider++) {
+      let x_slider, x_end
+
+      if (x_intersection < x2) {
+        x_slider = x_intersection + alpha13 * (y_slider - y2) + 0.5
+        x_end = x2 + alpha23 * (y_slider - y2) + 0.5
+      } else {
+        x_slider = x2 + alpha23 * (y_slider - y2) + 0.5
+        x_end = x_intersection + alpha13 * (y_slider - y2) + 0.5
+      }
+
+      for (; x_slider <= x_end; x_slider++) {
+        this.SetPixel(x_slider, y_slider, draw_color)
+      }
+    }
+  }
+
+  DrawTriangleBorder (x1, y1, x2, y2, x3, y3, color) {
+    DrawLine(x1, y1, x2, y2, color)
+    DrawLine(x1, y1, x3, y3, color)
+    DrawLine(x2, y2, x3, y3, color)
+  }
+
   DrawImage (x, y, image_index, u, v, width, height, color_key) {
     const image = this.GetImageBank(image_index, true)
 
@@ -269,6 +529,20 @@ export default class Graphics {
           font <<= 1
         }
       }
+    }
+  }
+
+  GetDrawColor (color) {
+    return this.palette_table[color]
+  }
+  ScreenImage () {
+    return this.image_bank[IMAGE_BANK_FOR_SCREEN]
+  }
+  SetPixel(x, y, draw_color) {
+    x = Math.floor(x)
+    y = Math.floor(y)
+    if (this.clip_area.Includes(x, y)) {
+      this.screen_data[y][x] = draw_color;
     }
   }
 }

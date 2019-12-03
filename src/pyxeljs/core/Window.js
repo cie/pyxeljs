@@ -92,4 +92,7 @@ export default class Window {
     }
     this.helperCtx.putImageData(imageData, 0, 0)
   }
+  ScreenScale () {
+    return this.screen_scale
+  }
 }

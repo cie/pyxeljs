@@ -33,7 +33,6 @@ export default class System {
     this.height = height
     Sk.importModule('pyxel').$d['width'] = Sk.ffi.remapToPy(width)
     Sk.importModule('pyxel').$d['height'] = Sk.ffi.remapToPy(height)
-    this.input = new Input()
     this.graphics = new Graphics(width, height)
     this.audio = new Audio()
     this.resource = new Resource()
@@ -45,6 +44,7 @@ export default class System {
       border_width,
       border_color
     )
+    this.input = new Input(this.window)
     this.palette_color = palette_color
     this.fps = fps
     this.quit_key = quit_key
@@ -116,7 +116,7 @@ export default class System {
   }
 
   async UpdateFrame (update) {
-    this.input.Update()
+    this.input.Update(this.window)
     if (update) await update()
   }
 
@@ -125,6 +125,22 @@ export default class System {
     this.DrawMouseCursor()
     this.window.Render(this.graphics.ScreenImage().data)
   }
+
+  async FlipScreen() {
+    await this.WaitForUpdateTime();
+    this.next_update_time += this.one_frame_time;
+  
+    this.frame_count++;
+    this.UpdateFrame(null);
+    this.DrawFrame(null);
+  }
+  
+  async ShowScreen() {
+    while (true) {
+      await this.FlipScreen();
+    }
+  }
+
 
   DrawMouseCursor () {
     //TODO

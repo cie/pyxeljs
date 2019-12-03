@@ -60,11 +60,15 @@ var $builtinmodule = ${function (name) {
   })
 
   mod.flip = new Sk.builtin.func(function () {
-    s_system.FlipScreen()
+    return Sk.misceval.promiseToSuspension(
+      s_system.FlipScreen()
+    )
   })
 
   mod.show = new Sk.builtin.func(function () {
-    s_system.ShowScreen()
+    return Sk.misceval.promiseToSuspension(
+      s_system.ShowScreen()
+    )
   })
 
   mod._drop_file_getter = new Sk.builtin.func(function (str, str_length) {
