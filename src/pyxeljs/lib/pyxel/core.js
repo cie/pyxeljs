@@ -268,6 +268,7 @@ var $builtinmodule = ${function (name) {
   })
 
   mod.bltm = new Sk.builtin.func(function (x, y, tm, u, v, w, h, colkey) {
+    return // TODO
     s_graphics.DrawTilemap(
       Sk.ffi.remapToJs(x),
       Sk.ffi.remapToJs(y),
@@ -418,10 +419,12 @@ var $builtinmodule = ${function (name) {
   })
 
   mod.tilemap_refimg_getter = new Sk.builtin.func(function (TILEMAP) {
+    return 0 // TODO
     return Sk.ffi.remapToPy(TILEMAP.ImageIndex())
   })
 
   mod.tilemap_refimg_setter = new Sk.builtin.func(function (TILEMAP, refimg) {
+    return // TODO
     TILEMAP.ImageIndex(Sk.ffi.remapToJs(refimg))
   })
 
@@ -446,6 +449,7 @@ var $builtinmodule = ${function (name) {
     data,
     data_length
   ) {
+    return // TODO
     const tilemap_string = new TilemapString()
     data = Sk.ffi.remapToJs(data)
     for (let i = 0; i < data.length; i++) {

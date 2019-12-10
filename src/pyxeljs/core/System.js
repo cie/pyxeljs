@@ -18,6 +18,7 @@ export default class System {
     border_color,
     quit_key
   ) {
+    document.title = caption
     if (
       width < 1 ||
       width > MAX_SCREEN_SIZE ||
@@ -66,8 +67,8 @@ export default class System {
 
   async Run (update, draw) {
     this.next_update_time = Date.now() + this.one_frame_time
-    this.UpdateFrame(update)
-    this.DrawFrame(draw)
+    await this.UpdateFrame(update)
+    await this.DrawFrame(draw)
     Sk.interrupters = Sk.interrupters || []
     let interrupted = false
     Sk.interrupters.push(() => {

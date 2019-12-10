@@ -138,7 +138,7 @@ export default class Graphics {
       let alpha = (end_y - start_y) / (end_x - start_x)
 
       for (let i = 0; i < length; i++) {
-        this.SetPixel(start_x + i,  Math.round(start_y + alpha * i + 0.5), draw_color)
+        this.SetPixel(start_x + i,  Math.trunc(start_y + alpha * i + 0.5), draw_color)
       }
     } else {
       let start_x, start_y
@@ -160,7 +160,7 @@ export default class Graphics {
       let alpha = (end_x - start_x) / (end_y - start_y)
 
       for (let i = 0; i < length; i++) {
-        this.SetPixel(start_x + Math.round(alpha * i + 0.5), start_y + i, draw_color)
+        this.SetPixel(Math.trunc(start_x + alpha * i + 0.5), start_y + i, draw_color)
       }
     }
   }
@@ -224,7 +224,7 @@ export default class Graphics {
     const sq_radius = radius * radius
 
     for (let dx = 0; dx <= radius; dx++) {
-      let dy = Math.round(Math.sqrt(sq_radius - dx * dx))
+      let dy = Math.trunc(Math.sqrt(sq_radius - dx * dx) + 0.5)
 
       if (dx > dy) {
         continue
@@ -250,7 +250,7 @@ export default class Graphics {
     const sq_radius = radius * radius
 
     for (let dx = 0; dx <= radius; dx++) {
-      const dy = Math.round(Math.sqrt(sq_radius - dx * dx))
+      const dy = Math.trunc(Math.sqrt(sq_radius - dx * dx) + 0.5)
 
       if (dx > dy) {
         continue
